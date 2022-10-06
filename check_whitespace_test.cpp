@@ -2,24 +2,31 @@
 
 #include "check_whitespace.h"
 
+void test(const char* correct, const char* toBeTested) {
+    const char *result = strip(toBeTested);
+    ASSERT_STREQ(correct, result);
+    free((char*)result);
+}
+
 TEST(strip, EmptyString) {
-    ASSERT_STREQ("", strip(""));
+    const char* testStr = strip("");
+    ASSERT_STREQ("", testStr);
 }
 
 TEST(strip, NoWhitespace) {
-    ASSERT_STREQ("frog", strip("frog"));
+    test("frog","frog");
 }
 
 TEST(strip, WhitespaceOnFront) {
-    ASSERT_STREQ("frog", strip("   frog"));
+    test("frog","   frog");
 }
 
 TEST(strip, WhitespaceOnBack) {
-    ASSERT_STREQ("frog", strip("frog  "));
+    test("frog", "frog  ");
 }
 
 TEST(strip, WhitespaceOnBothEnds) {
-    ASSERT_STREQ("frog", strip("  frog     "));
+    test("frog", "  frog     ");
 }
 
 TEST(is_clean, EmptyString) {
